@@ -8,7 +8,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
 
-@app.route('/')
+
 class PdfCrawler(scrapy.Spider):
     name = 'pdf_crawler'
     start_urls = [
@@ -45,14 +45,14 @@ class PdfCrawler(scrapy.Spider):
     def _contains_keywords(self, text):
         return any(word in text.lower() for word in self.keywords)
     
-    @app.route('/results')
-    def get_results():
+@app.route('/results')
+def get_results():
      with open('resultados.json') as f:
         data = json.load(f)
         return jsonify(data)
 
-    @app.route('/')
-    def index():
+@app.route('/')
+def index():
      return '''
         <!DOCTYPE html>
         <html>
@@ -85,7 +85,7 @@ class PdfCrawler(scrapy.Spider):
         </body>
         </html>
     '''    
-    if __name__ == '__main__':
+if __name__ == '__main__':
         with io.StringIO() as buf, redirect_stdout(buf):
             app.run()
             output = buf.getvalue()
