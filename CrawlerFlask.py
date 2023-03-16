@@ -47,7 +47,7 @@ class PdfCrawler(scrapy.Spider):
     
 @app.route('/results')
 def get_results():
-     with open('resultados.json') as f:
+    with open('resultados.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         return jsonify(data)
 
