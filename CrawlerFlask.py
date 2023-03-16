@@ -3,7 +3,6 @@ import io
 import json
 from PyPDF2 import PdfReader
 from flask import Flask,jsonify
-from contextlib import redirect_stdout
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
