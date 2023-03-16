@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados da análise de PDFs</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.getJSON('/results', function(data) {
+                var table = '<table>';
+                table += '<tr><th>Página</th><th>Posição</th><th>Contexto</th><th>Texto</th><th>Pontuação de Sentimento</th></tr>';
+                $.each(data, function(index, value) {
+                    table += '<tr>';
+                    table += '<td>' + value.page_number + '</td>';
+                    table += '<td>' + value.position + '</td>';
+                    table += '<td>' + value.context.join('<br>') + '</td>';
+                    table += '<td>' + value.text + '</td>';
+                    table += '<td>' + value.sentiment_score + '</td>';
+                    table += '</tr>';
+                });
+                table += '</table>';
+                $('#results').html(table);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Resultados da análise de PDFs</h1>
+    <div id="results"></div>
+</body>
+</html>
