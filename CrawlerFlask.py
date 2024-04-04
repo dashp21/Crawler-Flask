@@ -2,7 +2,7 @@ import scrapy
 import io
 import json
 from PyPDF2 import PdfReader
-from flask import Flask,jsonify
+from flask import Flask,jsonify,render_template
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
@@ -52,39 +52,10 @@ def get_results():
 
 @app.route('/')
 def index():
-     return '''
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Resultados da análise de PDFs</title>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $.getJSON('/results', function(data) {
-                        var table = '<table>';
-                        table += '<tr><th>Página</th><th>Posição</th><th>Contexto</th><th>Texto</th><th>Pontuação de Sentimento</th></tr>';
-                        $.each(data, function(index, value) {
-                            table += '<tr>';
-                            table += '<td>' + value.page_number + '</td>';
-                            table += '<td>' + value.position + '</td>';
-                            table += '<td>' + value.context.join('<br>') + '</td>';
-                            table += '<td>' + value.text + '</td>';
-                            table += '<td>' + value.sentiment_score + '</td>';
-                            table += '</tr>';
-                        });
-                        table += '</table>';
-                        $('#results').html(table);
-                    });
-                });
-            </script>
-        </head>
-        <body>
-            <h1>Resultados da análise de PDFs</h1>
-            <div id="results"></div>
-        </body>
-        </html>
-    '''    
+    return render_template('web.html',title = 'Resultados da análise de PDFs')
+   
+        
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
     
